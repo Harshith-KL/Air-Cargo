@@ -1,4 +1,5 @@
 const shipmentRepository = require("../repositories/shipment.repository");
+const { findShipmentByNumber, searchShipments, aggregateStatistics, findRecentShipments, findShipmentsByDateRange } = require("../repositories/shipment.repository");
 const createShipment = async(data, userId, organizationId) => {
     if(!userId){
         throw new Error("User not authenticated");
@@ -183,4 +184,29 @@ module.exports = {
     deleteShipmentById,
     duplicateShipment,
     updateShipmentStatus,
+    getShipmentByNumber: async (shipmentNumber, organizationId) => {
+        const shipment = await findShipmentByNumber(shipmentNumber, organizationId);
+        if (!shipment) throw new Error("Shipment not found");
+        return shipment;
+    },
+    searchShipments: async (filters, organizationId, limit=10) => {
+        return await searchShipments(filters, organizationId, limit);
+    },
+    getStatistics: async (organizationId) => {
+        const rows = await aggregateStatistics(organizationId);
+        const stats = {};
+        rows.forEach(r => { stats[r._id] = { count: r.count, totalGrossWeight: r.totalGrossWeight, totalPieces: r.totalPieces }; });
+        return stats;
+    },
+    getRecentShipments: async (limit, organizationId) => {
+        return await findRecentShipments(limit, organizationId);
+    },
+    getShipmentsByDateRange: async (startDate, endDate, status, organizationId) => {
+        return await findShipmentsByDateRange(startDate, endDate, status, organizationId);
+    },
+    getShipmentSummary: async (organizationId) => {
+        const stats = await aggregateStatistics(organizationId);
+        const recent = await findRecentShipments(5, organizationId);
+        return { stats, recent };
+    },
 };

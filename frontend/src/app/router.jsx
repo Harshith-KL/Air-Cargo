@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "../features/auth/pages/LoginPage";
 import DashboardPage from "../features/dashboard/pages/DashboardPage";
 import ShipmentPage from "../features/shipments/pages/ShipmentPage";
+import AiAssistantPage from "../features/ai/pages/AiAssistantPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import SignupPage from "../features/auth/pages/SignupPage";
 
@@ -24,6 +25,14 @@ function AppRouter() {
         element={
           <ProtectedRoute>
             <ShipmentPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/ai-assistant"
+        element={
+          <ProtectedRoute>
+            <AiAssistantPage />
           </ProtectedRoute>
         }
       />
