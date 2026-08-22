@@ -15,18 +15,18 @@ const createShipment = async(data, userId, organizationId) => {
         shipmentNumber = `SHP-${year}-${nextNumber}`;
     }
 
+    const status = data.status && ["DRAFT", "SUBMITTED"].includes(data.status) ? data.status : "DRAFT";
     const volume = (data.length * data.width * data.height) / 1000000;
-    
     const statusHistory = [{
-        status: "DRAFT",
-        remarks: "Shipment created",
+        status,
+        remarks: status === "SUBMITTED" ? "Shipment submitted" : "Shipment created",
     }];
 
     const shipment = await shipmentRepository.createShipment({
         ...data,
         shipmentNumber,
         volume,
-        status: "DRAFT",
+        status,
         statusHistory,
         createdBy: userId,
         organizationId,

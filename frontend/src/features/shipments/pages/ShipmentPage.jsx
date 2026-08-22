@@ -17,27 +17,31 @@ const ShipmentPage = () => {
   });
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-useEffect(() => {
-  const apiFilters = {};
+  const buildApiFilters = () => {
+    const apiFilters = {};
 
-  if (filters.status !== "All") {
-    apiFilters.status = filters.status;
-  }
+    if (filters.status !== "All") {
+      apiFilters.status = filters.status.toUpperCase().replace(/\s+/g, "_");
+    }
 
-  if (filters.origin !== "All") {
-    apiFilters.originAirport = filters.origin;
-  }
+    if (filters.origin !== "All") {
+      apiFilters.originAirport = filters.origin;
+    }
 
-  if (filters.destination !== "All") {
-    apiFilters.destinationAirport = filters.destination;
-  }
+    if (filters.destination !== "All") {
+      apiFilters.destinationAirport = filters.destination;
+    }
 
-  if (filters.service !== "All") {
-    apiFilters.serviceLevel = filters.service;
-  }
+    if (filters.service !== "All") {
+      apiFilters.serviceLevel = filters.service;
+    }
 
-  fetchShipments(apiFilters, currentPage, 12);
-}, [filters, currentPage, fetchShipments]);
+    return apiFilters;
+  };
+
+  useEffect(() => {
+    fetchShipments(buildApiFilters(), currentPage, 12);
+  }, [filters, currentPage, fetchShipments]);
 
   const handleFilterChange = (filterName, value) => {
     setFilters((prev) => ({ ...prev, [filterName]: value }));
@@ -45,11 +49,12 @@ useEffect(() => {
   };
 
   const handleRefresh = () => {
-    fetchShipments(filters, currentPage, 12);
+    fetchShipments(buildApiFilters(), currentPage, 12);
   };
 
   const handleShipmentCreated = () => {
     setShowCreateModal(false);
+    setCurrentPage(1);
     handleRefresh();
   };
 

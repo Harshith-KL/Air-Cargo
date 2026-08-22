@@ -35,12 +35,12 @@ const FlightStep = ({ data, onChange }) => {
           >
             <option value="">Select airline</option>
             <option value="Lufthansa">Lufthansa</option>
-            <option value="Air France">Air France</option>
-            <option value="United Cargo">United Cargo</option>
-            <option value="Emirates">Emirates</option>
-            <option value="Qatar Airways">Qatar Airways</option>
+            <option value="Emirates SkyCargo">Emirates SkyCargo</option>
             <option value="Singapore Airlines">Singapore Airlines</option>
-            <option value="Cathay Pacific">Cathay Pacific</option>
+            <option value="Cathay Cargo">Cathay Cargo</option>
+            <option value="Qatar Airways">Qatar Airways</option>
+            <option value="Air France-KLM">Air France-KLM</option>
+            <option value="United Cargo">United Cargo</option>
           </select>
         </div>
       </div>

@@ -60,11 +60,22 @@ const CreateShipmentModal = ({ onClose, onSuccess }) => {
     }
   };
 
+  const handleSaveDraft = async () => {
+    try {
+      setLoading(true);
+      await create({ ...formData, status: "DRAFT" });
+      onSuccess();
+    } catch (error) {
+      console.error("Error saving draft shipment:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      console.log("FORM DATA:", formData);
       setLoading(true);
-      await create(formData);
+      await create({ ...formData, status: "SUBMITTED" });
       onSuccess();
     } catch (error) {
       console.error("Error creating shipment:", error);
@@ -153,7 +164,7 @@ const CreateShipmentModal = ({ onClose, onSuccess }) => {
 
           <div className="footer-actions">
             {currentStep > 1 && (
-              <button className="btn-save-draft">
+              <button className="btn-save-draft" onClick={handleSaveDraft}>
                 Save draft
               </button>
             )}

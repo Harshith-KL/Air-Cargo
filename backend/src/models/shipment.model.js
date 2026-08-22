@@ -106,7 +106,6 @@ const shipmentSchema = new mongoose.Schema({
     },
     consigneeAddress: {
         type: String,
-        
     },
     preferredDepartureDate: {
         type: Date,

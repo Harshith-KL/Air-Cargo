@@ -21,8 +21,8 @@ const createShipmentSchema = z.object({
             "Live Animals",
             "Perishable",
         ]),
-        // originAirport: z.string().regex(/^[0-9a-fA-F]{24}$/,"Invalid origin airport id"),
-        // destinationAirport: z.string().regex(/^[0-9a-fA-F]{24}$/,"Invalid destination airport id"),
+        originAirport: z.string().regex(/^[0-9a-fA-F]{24}$/,"Invalid origin airport id"),
+        destinationAirport: z.string().regex(/^[0-9a-fA-F]{24}$/,"Invalid destination airport id"),
         pieces: z.number().int().min(1, "Pieces must be at least 1"),
         grossWeight: z.number().positive("Gross weight must be greater than 0"),
         length: z.number().positive("Length must be greater than 0"),
@@ -31,7 +31,7 @@ const createShipmentSchema = z.object({
         consigneeCompany: z.string().min(2, "Consignee company is required"),
         consigneeContactPerson: z.string().min(2, "Contact person is required"),
         consigneeEmail: z.email("Invalid consignee email"),
-        
+        consigneeAddress: z.string().min(5, "Consignee address is required"),
         preferredDepartureDate: z.coerce.date(),
         preferredAirline: z.enum([
             "Lufthansa",
@@ -47,6 +47,7 @@ const createShipmentSchema = z.object({
             "Express",
             "Priority",
         ]),
+        status: z.enum(["DRAFT", "SUBMITTED"]).optional(),
     }),
 });
 

@@ -46,6 +46,16 @@ const PartiesStep = ({ data, onChange }) => {
               />
             </div>
           </div>
+
+          <div className="form-group">
+            <label>Address</label>
+            <textarea
+              rows="3"
+              placeholder="Street, city, postal code, country"
+              value={data.consigneeAddress || ""}
+              onChange={(e) => handleConsigneeChange("consigneeAddress", e.target.value)}
+            />
+          </div>
         </div>
       </div>
     </div>

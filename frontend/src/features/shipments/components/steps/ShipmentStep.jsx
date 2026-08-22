@@ -28,27 +28,33 @@ const ShipmentStep = ({ data, onChange, airports }) => {
             value={data.commodityType}
             onChange={(e) => handleInputChange("commodityType", e.target.value)}
           >
-            {" "}
-            <option>Electronics</option> <option>Automotive parts</option>{" "}
-            <option>Perishable foods</option> <option>Consumer goods</option>{" "}
-            <option>Aircraft components</option> <option>Other</option>{" "}
-          </select>{" "}
-        </div>{" "}
+            <option value="Electronics">Electronics</option>
+            <option value="Pharmaceuticals">Pharmaceuticals</option>
+            <option value="Machine parts">Machine parts</option>
+            <option value="Textiles & apparel">Textiles &amp; apparel</option>
+            <option value="Perishable foods">Perishable foods</option>
+            <option value="Automotive parts">Automotive parts</option>
+            <option value="Aircraft components">Aircraft components</option>
+            <option value="Consumer goods">Consumer goods</option>
+          </select>
+        </div>
         <div className="form-group">
-          {" "}
-          <label>Special handling</label>{" "}
+          <label>Special handling</label>
           <select
             value={data.specialHandling}
             onChange={(e) =>
               handleInputChange("specialHandling", e.target.value)
             }
           >
-            {" "}
-            <option>None</option> <option>Temperature Controlled</option>{" "}
-            <option>Hazmat</option> <option>Fragile</option>{" "}
-          </select>{" "}
-        </div>{" "}
-      </div>{" "}
+            <option value="None">None</option>
+            <option value="Fragile">Fragile</option>
+            <option value="Temperature Controlled">Temperature Controlled</option>
+            <option value="Dangerous Goods">Dangerous Goods</option>
+            <option value="Live Animals">Live Animals</option>
+            <option value="Perishable">Perishable</option>
+          </select>
+        </div>
+      </div>
       <div className="form-row">
         {" "}
         <div className="form-group">
