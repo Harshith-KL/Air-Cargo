@@ -6,6 +6,7 @@ import {
   LogOut,
   Menu,
   X,
+  Sparkles,
 } from "lucide-react";
 import "./MainLayout.css";
 
@@ -28,7 +29,7 @@ const MainLayout = ({ children }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
     { icon: Package, label: "Shipments", path: "/shipments" },
-    { icon: LayoutDashboard, label: "AI Assistant", path: "/ai-assistant" },
+    { icon: Sparkles, label: "AI Assistant", path: "/ai-assistant" },
   ];
 
   return (

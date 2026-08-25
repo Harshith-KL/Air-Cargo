@@ -1,5 +1,5 @@
 const shipmentRepository = require("../repositories/shipment.repository");
-const { findShipmentByNumber, searchShipments, aggregateStatistics, findRecentShipments, findShipmentsByDateRange } = require("../repositories/shipment.repository");
+const { findShipmentByNumber, searchShipments, aggregateStatistics, aggregateOperationalStatistics, findRecentShipments, findShipmentsByDateRange } = require("../repositories/shipment.repository");
 const createShipment = async(data, userId, organizationId) => {
     if(!userId){
         throw new Error("User not authenticated");
@@ -193,10 +193,7 @@ module.exports = {
         return await searchShipments(filters, organizationId, limit);
     },
     getStatistics: async (organizationId) => {
-        const rows = await aggregateStatistics(organizationId);
-        const stats = {};
-        rows.forEach(r => { stats[r._id] = { count: r.count, totalGrossWeight: r.totalGrossWeight, totalPieces: r.totalPieces }; });
-        return stats;
+        return await aggregateOperationalStatistics(organizationId);
     },
     getRecentShipments: async (limit, organizationId) => {
         return await findRecentShipments(limit, organizationId);

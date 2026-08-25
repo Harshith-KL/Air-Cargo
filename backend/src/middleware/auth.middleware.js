@@ -3,7 +3,7 @@ const {verifyToken} = require("../utils/jwt");
 const authenticate = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
-        if(!authHeader){
+        if(!authHeader || !/^Bearer\s+\S+$/.test(authHeader)){
             return res.status(401).json({
                 success: false,
                 message: "Authorization token missing",

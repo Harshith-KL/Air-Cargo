@@ -1,11 +1,5 @@
 const safeLog = (obj) => {
-  // remove sensitive fields
-  const { OPENAI_API_KEY, MONGODB_URI, JWT_SECRET, ...rest } = process.env;
-  try {
-    console.log(JSON.stringify(rest) ? JSON.stringify(obj) : obj);
-  } catch (e) {
-    console.log(obj);
-  }
+  try { console.log(JSON.stringify(obj)); } catch { console.log("AI log serialization failed"); }
 };
 
 const info = (message, meta = {}) => {

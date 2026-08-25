@@ -1,41 +1,15 @@
-const shipmentService = require("../services/shipment.service");
+const string = (description) => ({ type: "string", description });
+const optionalString = (description) => ({ anyOf: [{ type: "string" }, { type: "null" }], description });
+const optionalInteger = (description, minimum, maximum) => ({ anyOf: [{ type: "integer", minimum, maximum }, { type: "null" }], description });
 
-const TOOLS = {
-  get_shipment_by_number: async (args, ctx) => {
-    const { shipmentNumber } = args;
-    const shipment = await shipmentService.getShipmentByNumber(shipmentNumber, ctx.organizationId);
-    return shipment ? { shipment } : { shipment: null };
-  },
+const TOOLS = [
+  { type: "function", name: "get_shipment_by_number", description: "Find one shipment in the authenticated user's organization.", parameters: { type: "object", properties: { shipmentNumber: string("Shipment number") }, required: ["shipmentNumber"], additionalProperties: false }, strict: true },
+  { type: "function", name: "search_shipments", description: "Search authenticated-organization shipments using explicit business filters.", parameters: { type: "object", properties: { shipmentNumber: optionalString("Exact shipment number"), status: optionalString("Shipment status"), originAirportCode: optionalString("Three-letter origin airport code"), destinationAirportCode: optionalString("Three-letter destination airport code"), startDate: optionalString("ISO departure start date"), endDate: optionalString("ISO departure end date"), serviceLevel: optionalString("Service level"), commodityType: optionalString("Commodity"), preferredAirline: optionalString("Preferred airline"), limit: optionalInteger("Maximum results", 1, 50) }, required: ["shipmentNumber", "status", "originAirportCode", "destinationAirportCode", "startDate", "endDate", "serviceLevel", "commodityType", "preferredAirline", "limit"], additionalProperties: false }, strict: true },
+  { type: "function", name: "get_recent_shipments", description: "List recently created shipments in the authenticated organization.", parameters: { type: "object", properties: { limit: optionalInteger("Maximum results", 1, 50) }, required: ["limit"], additionalProperties: false }, strict: true },
+  { type: "function", name: "get_shipment_statistics", description: "Get shipment counts, weights, and pieces grouped by status.", parameters: { type: "object", properties: {}, additionalProperties: false }, strict: true },
+  { type: "function", name: "get_airport_by_code", description: "Resolve a three-letter airport code to a known airport.", parameters: { type: "object", properties: { code: string("Three-letter airport code") }, required: ["code"], additionalProperties: false }, strict: true },
+  { type: "function", name: "get_airport_by_name", description: "Find a known airport by name.", parameters: { type: "object", properties: { name: string("Airport name") }, required: ["name"], additionalProperties: false }, strict: true },
+  { type: "function", name: "create_shipment", description: "Prepare or create a shipment. Use confirmation false first and true only after explicit user confirmation.", parameters: { type: "object", properties: { cargoDescription: string("Cargo description"), commodityType: string("Supported commodity"), specialHandling: string("Supported handling"), originAirportCode: string("Three-letter origin code"), destinationAirportCode: string("Three-letter destination code"), pieces: { type: "integer", minimum: 1, maximum: 100000 }, grossWeight: { type: "number", exclusiveMinimum: 0, maximum: 1000000 }, length: { type: "number", exclusiveMinimum: 0 }, width: { type: "number", exclusiveMinimum: 0 }, height: { type: "number", exclusiveMinimum: 0 }, consigneeCompany: string("Consignee company"), consigneeContactPerson: string("Consignee contact"), consigneeEmail: string("Consignee email"), consigneeAddress: optionalString("Consignee address"), preferredDepartureDate: string("ISO departure date"), preferredAirline: string("Supported airline"), serviceLevel: string("Service level"), confirmation: { type: "boolean" } }, required: ["cargoDescription", "commodityType", "specialHandling", "originAirportCode", "destinationAirportCode", "pieces", "grossWeight", "length", "width", "height", "consigneeCompany", "consigneeContactPerson", "consigneeEmail", "consigneeAddress", "preferredDepartureDate", "preferredAirline", "serviceLevel", "confirmation"], additionalProperties: false }, strict: true },
+];
 
-  search_shipments: async (args, ctx) => {
-    const { limit = 10, ...filters } = args;
-    const results = await shipmentService.searchShipments(filters, ctx.organizationId, Math.min(limit, 50));
-    return { results };
-  },
-
-  get_shipment_statistics: async (_, ctx) => {
-    const stats = await shipmentService.getStatistics(ctx.organizationId);
-    return { stats };
-  },
-
-  get_recent_shipments: async (args, ctx) => {
-    const limit = Math.min(args.limit || 5, 50);
-    const results = await shipmentService.getRecentShipments(limit, ctx.organizationId);
-    return { results };
-  },
-
-  get_shipments_by_date_range: async (args, ctx) => {
-    const { startDate, endDate, status } = args;
-    const results = await shipmentService.getShipmentsByDateRange(startDate, endDate, status, ctx.organizationId);
-    return { results };
-  },
-
-  get_shipment_summary: async (_, ctx) => {
-    const summary = await shipmentService.getShipmentSummary(ctx.organizationId);
-    return { summary };
-  },
-};
-
-module.exports = {
-  TOOLS,
-};
+module.exports = { TOOLS };

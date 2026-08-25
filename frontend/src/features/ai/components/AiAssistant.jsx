@@ -1,119 +1,100 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AlertCircle, ArrowUp, Check, ClipboardList, RotateCcw, Sparkles, Trash2, TrendingUp } from "lucide-react";
 import { useAiChat } from "../hooks/useAiChat";
+import AiMessage from "./AiMessage";
 import "../styles/AiAssistant.css";
 
-const SAMPLE_QUESTIONS = [
-  "Show my shipments in transit",
-  "How many shipments are currently submitted?",
-  "What is the status of SHP-2026-000001?",
-  "Show shipments going to DXB",
-  "Give me a summary of recent shipments",
+const suggestions = [
+  { label: "Today's activity", prompt: "Give me a summary of today's shipments.", icon: ClipboardList },
+  { label: "Pending shipments", prompt: "Show me shipments that are pending.", icon: AlertCircle },
+  { label: "Operational trends", prompt: "Give me an overview of shipment activity and important trends.", icon: TrendingUp },
+  { label: "Airport activity", prompt: "Which airports have the most shipments?", icon: Sparkles },
 ];
 
 const AiAssistant = () => {
   const [input, setInput] = useState("");
-  const { messages, loading, error, send, clear } = useAiChat();
-  const [view, setView] = useState("list"); // 'list' or 'chat'
-  const [activeQuestion, setActiveQuestion] = useState(null);
-  const [sampleResponses, setSampleResponses] = useState({});
+  const messagesEndRef = useRef(null);
+  const { messages, loading, error, confirmationRequired, lastMessage, send, clear } = useAiChat();
 
-  const handleSend = async (text) => {
-    if (!text || !text.trim()) return;
-    try {
-      const res = await send(text.trim());
-      return res;
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  };
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
-  const handleClickQuestion = async (q) => {
-    setActiveQuestion(q);
-    setView("chat");
+  const submit = async (value = input) => {
+    if (!value.trim() || loading) return;
     setInput("");
-    // show loading under the question
-    setSampleResponses((s) => ({ ...s, [q]: { loading: true } }));
     try {
-      const res = await handleSend(q);
-      const text = res?.data?.data?.message || res?.data?.message || (res?.data && typeof res.data === 'string' ? res.data : null);
-      setSampleResponses((s) => ({ ...s, [q]: { loading: false, text } }));
-    } catch (err) {
-      const errMsg = err?.message || 'Error';
-      setSampleResponses((s) => ({ ...s, [q]: { loading: false, error: errMsg } }));
+      await send(value);
+    } catch {
+      return null;
     }
   };
 
-  const renderList = () => (
-    <div className="ai-list">
-      <h2>AI Assistant — Quick Questions</h2>
-      <p className="hint">Click a question to ask the assistant. Or type your own below.</p>
-      <ul className="questions">
-        {SAMPLE_QUESTIONS.map((q, idx) => (
-          <li key={idx} className="question-item">
-            <div onClick={() => handleClickQuestion(q)}>{q}</div>
-            {sampleResponses[q] && (
-              <div className="sample-response">
-                {sampleResponses[q].loading && <div className="resp-loading">Loading...</div>}
-                {sampleResponses[q].text && <div className="resp-text">{sampleResponses[q].text}</div>}
-                {sampleResponses[q].error && <div className="resp-error">{sampleResponses[q].error}</div>}
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-      <div className="compose">
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about your shipments" />
-        <button onClick={() => handleClickQuestion(input)} disabled={loading || !input.trim()}>Ask</button>
-      </div>
-    </div>
-  );
-
-  const renderChat = () => (
-    <div className="ai-chat">
-      <div className="chat-header">
-        <button className="back-btn" onClick={() => setView("list")}>Go to main chat</button>
-        <h3>{activeQuestion || "Chat"}</h3>
-        <div style={{ marginLeft: 'auto' }}>
-          <button className="back-btn" onClick={() => { clear(); setSampleResponses({}); }}>Clear Chat</button>
-        </div>
-      </div>
-
-      <div className="ai-messages" style={{ minHeight: 300 }}>
-        {messages.length === 0 && <div className="empty">No messages yet.</div>}
-        {messages.map((m, i) => (
-          <div key={i} className={`msg ${m.role}`}>
-            <div className="msg-role">{m.role}</div>
-            <div className="msg-text">{m.text}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="compose">
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a follow-up question" />
-        <button onClick={async () => { await handleSend(input); setInput(""); }} disabled={loading || !input.trim()}>Send</button>
-      </div>
-
-      {error && <div className="error">{error}</div>}
-    </div>
-  );
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      submit();
+    }
+  };
 
   return (
-    <div className="ai-assistant-grid">
-      <div className="left-col">
-        {renderList()}
-      </div>
-      <div className="right-col">
-        {view === "list" ? (
-          <div className="placeholder">
-            <h2>Ask the AI</h2>
-            <p className="hint">Select a sample question or compose your own on the left.</p>
+    <section className="ai-assistant" aria-labelledby="ai-title">
+      <header className="ai-header">
+        <div>
+          <div className="ai-eyebrow"><span className="online-dot" /> AI OPERATIONS DESK</div>
+          <h1 id="ai-title">AI Assistant</h1>
+          <p>Ask questions about shipments, airports, and cargo activity.</p>
+        </div>
+        <div className="ai-header-actions">
+          <span className="online-status">Assistant online</span>
+          <button className="icon-button" onClick={clear} disabled={!messages.length && !error} aria-label="Clear conversation" title="Clear conversation">
+            <Trash2 size={18} />
+          </button>
+        </div>
+      </header>
+
+      <div className="ai-workspace">
+        <div className="ai-conversation" aria-live="polite">
+          {messages.length === 0 ? (
+            <div className="ai-empty-state">
+              <div className="ai-empty-icon"><Sparkles size={24} /></div>
+              <h2>How can I help with your cargo operations?</h2>
+              <p>Ask for live shipment information, airport activity, or an operational summary.</p>
+              <div className="suggestion-grid">
+                {suggestions.map(({ label, prompt, icon: Icon }) => (
+                  <button key={label} className="suggestion-card" onClick={() => submit(prompt)} disabled={loading}>
+                    <Icon size={18} />
+                    <span>{label}</span>
+                    <small>{prompt}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="ai-message-list">
+              {messages.map((message, index) => <AiMessage key={`${message.role}-${index}`} {...message} />)}
+              {loading && <div className="ai-loading"><div className="ai-message-avatar"><Sparkles size={18} /></div><div><strong>Cargo Intelligence</strong><span><i /> <i /> <i /></span><p>Analyzing your cargo data...</p></div></div>}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
+
+        {confirmationRequired && (
+          <div className="confirmation-panel" role="status">
+            <div><strong>Confirm shipment creation</strong><p>{confirmationRequired.details.originAirportCode} to {confirmationRequired.details.destinationAirportCode} · {confirmationRequired.details.pieces} pieces · {confirmationRequired.details.grossWeight} kg</p></div>
+            <button className="primary-button" onClick={() => submit("Yes, confirm creation.")} disabled={loading}><Check size={16} /> Confirm</button>
           </div>
-        ) : (
-          renderChat()
         )}
+
+        {error && <div className="ai-error" role="alert"><AlertCircle size={18} /><span>{error}</span><button onClick={() => submit(lastMessage)} disabled={loading}><RotateCcw size={15} /> Retry</button></div>}
+
+        <div className="ai-composer">
+          <textarea value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={handleKeyDown} placeholder="Ask anything about your cargo operations..." aria-label="Ask the AI assistant" rows={2} disabled={loading} />
+          <button className="send-button" onClick={() => submit()} disabled={!input.trim() || loading} aria-label="Send message" title="Send message"><ArrowUp size={20} /></button>
+          <span className="composer-hint">Enter to send · Shift + Enter for a new line</span>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
