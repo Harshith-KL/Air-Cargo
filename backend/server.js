@@ -13,6 +13,7 @@ const startServer = async() => {
         });
     } catch (error) {
         console.error("server failed:", error.message);
+        process.exit(1);
     }
 };
 
