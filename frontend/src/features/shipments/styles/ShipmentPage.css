@@ -13,13 +13,13 @@
 .page-title {
   font-size: 28px;
   font-weight: 700;
-  color: #1a1d2e;
+  color: var(--color-ink);
   margin: 0 0 8px 0;
 }
 
 .page-subtitle {
   font-size: 14px;
-  color: #7a8fb0;
+  color: var(--color-muted);
   margin: 0;
 }
 
@@ -34,7 +34,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
@@ -43,23 +43,23 @@
 }
 
 .export-btn {
-  background: white;
-  color: #1a1d2e;
+  background: var(--color-surface);
+  color: var(--color-ink);
 }
 
 .export-btn:hover {
-  background-color: #f5f5f5;
-  border-color: #d5d5d5;
+  background-color: #f4f8fb;
+  border-color: #b9cbd9;
 }
 
 .new-shipment-btn {
-  background: #4a90e2;
+  background: var(--color-primary);
   color: white;
   border: none;
 }
 
 .new-shipment-btn:hover {
-  background: #3a80d2;
+  background: var(--color-primary-dark);
 }
 
 /* Filters Section */
@@ -68,10 +68,10 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
-  background: white;
+  background: var(--color-surface);
   padding: 20px;
   border-radius: 8px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border);
 }
 
 .filter-group {
@@ -82,7 +82,7 @@
 .filter-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #7a8fb0;
+  color: var(--color-muted);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -93,20 +93,20 @@
   border: 1px solid #e5e5e5;
   border-radius: 6px;
   font-size: 14px;
-  color: #1a1d2e;
-  background: white;
+  color: var(--color-ink);
+  background: var(--color-surface);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .filter-group select:hover {
-  border-color: #d5d5d5;
+  border-color: #b9cbd9;
 }
 
 .filter-group select:focus {
   outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(22, 119, 200, 0.12);
 }
 
 /* Shipments Table */
@@ -123,8 +123,8 @@
 }
 
 .shipments-table thead {
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: #f4f8fb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .shipments-table th {
@@ -132,7 +132,7 @@
   text-align: left;
   font-size: 12px;
   font-weight: 600;
-  color: #7a8fb0;
+  color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -142,7 +142,7 @@
 }
 
 .shipments-table tbody tr {
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border);
   transition: background-color 0.2s;
 }
 
@@ -153,7 +153,7 @@
 .shipments-table td {
   padding: 16px;
   font-size: 14px;
-  color: #1a1d2e;
+  color: var(--color-ink);
 }
 
 .shipments-table input[type="checkbox"] {
@@ -174,7 +174,7 @@
 }
 
 .route-code {
-  background-color: #f0f0f0;
+  background-color: #e6eef5;
   padding: 4px 8px;
   border-radius: 3px;
   font-weight: 600;
@@ -182,15 +182,15 @@
 }
 
 .route-icon {
-  color: #ddd;
+  color: #9db0c3;
   font-size: 12px;
 }
 
 .service-badge {
   display: inline-block;
   padding: 4px 12px;
-  background-color: #e8f4fd;
-  color: #4a90e2;
+  background-color: #e2f2f6;
+  color: #087f8c;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
@@ -208,7 +208,7 @@
 .action-btn {
   background: none;
   border: none;
-  color: #ccc;
+  color: #8fa3b7;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
@@ -216,15 +216,15 @@
 }
 
 .action-btn:hover {
-  background-color: #f0f0f0;
-  color: #666;
+  background-color: #e6eef5;
+  color: var(--color-ink-soft);
 }
 
 /* Empty State */
 .empty-state {
   padding: 60px 20px;
   text-align: center;
-  color: #7a8fb0;
+  color: var(--color-muted);
   font-size: 14px;
 }
 
@@ -240,10 +240,10 @@
 
 .pagination-btn {
   padding: 8px 16px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
-  color: #1a1d2e;
+  background: var(--color-surface);
+  color: var(--color-ink);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -251,8 +251,8 @@
 }
 
 .pagination-btn:hover:not(:disabled) {
-  background-color: #f5f5f5;
-  border-color: #d5d5d5;
+  background-color: #f4f8fb;
+  border-color: #b9cbd9;
 }
 
 .pagination-btn:disabled {
@@ -262,7 +262,7 @@
 
 .pagination-info {
   font-size: 14px;
-  color: #7a8fb0;
+  color: var(--color-muted);
 }
 
 .loading {
@@ -274,6 +274,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .page-title {
+    font-size: 24px;
+  }
+
   .shipments-header {
     flex-direction: column;
     gap: 16px;
@@ -281,6 +285,7 @@
 
   .header-actions {
     width: 100%;
+    gap: 8px;
   }
 
   .export-btn,
@@ -291,6 +296,8 @@
 
   .filters-section {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
   }
 
   .shipments-table {
@@ -305,5 +312,39 @@
   .route-code {
     padding: 2px 6px;
     font-size: 10px;
+  }
+
+  .shipments-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shipments-table {
+    min-width: 720px;
+  }
+
+  .pagination {
+    gap: 10px;
+    padding-inline: 0;
+  }
+
+  .pagination-btn {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .filters-section {
+    grid-template-columns: 1fr;
+  }
+
+  .export-btn,
+  .new-shipment-btn {
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  .pagination-info {
+    font-size: 12px;
   }
 }

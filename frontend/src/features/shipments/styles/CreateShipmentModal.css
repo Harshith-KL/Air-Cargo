@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(16, 35, 63, 0.58);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +23,7 @@
 }
 
 .modal-container {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   width: 90%;
   max-width: 600px;
@@ -32,6 +32,7 @@
   flex-direction: column;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
+  overflow: hidden;
 }
 
 @keyframes slideUp {
@@ -48,7 +49,7 @@
 /* Modal Header */
 .modal-header {
   padding: 24px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -62,7 +63,7 @@
 .modal-label {
   font-size: 11px;
   font-weight: 700;
-  color: #4a90e2;
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -71,14 +72,14 @@
 .modal-title h2 {
   font-size: 24px;
   font-weight: 700;
-  color: #1a1d2e;
+  color: var(--color-ink);
   margin: 0;
 }
 
 .modal-close {
   background: none;
   border: none;
-  color: #7a8fb0;
+  color: var(--color-muted);
   cursor: pointer;
   padding: 0;
   font-size: 24px;
@@ -426,6 +427,87 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+@media (max-width: 600px) {
+  .modal-overlay {
+    align-items: flex-end;
+  }
+
+  .modal-container {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .modal-header,
+  .modal-content {
+    padding: 18px 16px;
+  }
+
+  .modal-title h2 {
+    font-size: 20px;
+  }
+
+  .modal-steps {
+    gap: 6px;
+    padding: 14px 10px;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .step-label {
+    font-size: 10px;
+  }
+
+  .form-row,
+  .service-options {
+    grid-template-columns: 1fr;
+  }
+
+  .dimensions-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dimension-separator {
+    display: none;
+  }
+
+  .summary-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .summary-value {
+    overflow-wrap: anywhere;
+  }
+
+  .modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .btn-cancel,
+  .footer-actions,
+  .btn-save-draft,
+  .btn-continue,
+  .btn-submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .btn-save-draft {

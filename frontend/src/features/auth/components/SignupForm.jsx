@@ -62,9 +62,13 @@ return (
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        width: "430px",
+        width: "min(430px, calc(100vw - 32px))",
         mt: 18,
         mb: 8,
+        '@media (max-width: 768px)': {
+          mt: 10,
+          mb: 4,
+        },
       }}
     >
 
@@ -87,7 +91,7 @@ return (
         </Typography>
       </Box>
 
-      <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+      <Stack direction="row" spacing={2} sx={{ mb: 2, '@media (max-width: 520px)': { flexDirection: "column", gap: 0 } }}>
         <Box sx={{ flex: 1 }}>
           <Typography
             variant="body2"

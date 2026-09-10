@@ -6,9 +6,9 @@ const ShipmentsTable = ({ shipments }) => {
       case "draft":
         return "#888888";
       case "submitted":
-        return "#4a90e2";
+        return "#1677c8";
       case "confirmed":
-        return "#4a90e2";
+        return "#0d9488";
       case "in transit":
         return "#f5a623";
       case "in_transit":

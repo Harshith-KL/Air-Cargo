@@ -2,13 +2,13 @@ const PipelineChart = ({ pipeline }) => {
   if (!pipeline) return null;
 
   const statusColors = {
-    Draft: "#888888",
-    Submitted: "#4a90e2",
-    Confirmed: "#4a90e2",
-    "Picked Up": "#00bcd4",
-    "In Transit": "#f5a623",
-    Arrived: "#9c27b0",
-    Delivered: "#4caf50",
+    Draft: "#8a9aad",
+    Submitted: "#1677c8",
+    Confirmed: "#0d9488",
+    "Picked Up": "#27a9b8",
+    "In Transit": "#d9822b",
+    Arrived: "#7567b8",
+    Delivered: "#158a68",
   };
 
   const totalShipments = Object.values(pipeline).reduce((a, b) => a + b, 0);

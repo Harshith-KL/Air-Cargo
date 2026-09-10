@@ -28,6 +28,9 @@ const AuthLayoutLogin = ({ children }) => {
                     justifyContent: "space-between",
                     '@media (max-width: 768px)': {
                         width: '100%',
+                        minHeight: 'auto',
+                        px: 3,
+                        py: 3,
                     }
                 }}
             >
@@ -50,10 +53,14 @@ const AuthLayoutLogin = ({ children }) => {
                         sx={{
                             mt: 10,
                             mr: 48,
-                            color: "#3b82f6",
+                            color: "#55b7e8",
                             letterSpacing: 1,
                             fontSize: 12,
                             fontWeight: 500,
+                            '@media (max-width: 768px)': {
+                                mt: 5,
+                                mr: 0,
+                            },
                         }}
                     >
                         AIR CARGO OPERATIONS
@@ -68,6 +75,10 @@ const AuthLayoutLogin = ({ children }) => {
                             maxWidth: "520px",
                             mr: 30,
                             textAlign: "left",
+                            '@media (max-width: 768px)': {
+                                mr: 0,
+                                fontSize: "30px",
+                            },
                         }}
                     >
                         Book, track,
@@ -82,11 +93,14 @@ const AuthLayoutLogin = ({ children }) => {
                     <Typography
                         sx={{
                             mt:2,
-                            color: "#cbd5e1",
+                            color: "#c7d6e5",
                             fontSize: 15,
                             lineHeight: 1.5,
                             maxWidth: "350px",
                             textAlign: "left",
+                            '@media (max-width: 768px)': {
+                                maxWidth: "none",
+                            },
                         }}
                     >
                         From draft to delivered — a single guided workflow
@@ -143,6 +157,10 @@ const AuthLayoutLogin = ({ children }) => {
                         fontSize: 12,
                         mt:2,
                         mr: 27,
+                        '@media (max-width: 768px)': {
+                            mr: 0,
+                            mt: 4,
+                        },
                     }}
                 >
                     © 2026 Manifest Logistics · IATA-compliant air cargo platform
@@ -161,6 +179,9 @@ const AuthLayoutLogin = ({ children }) => {
                     overflow: "auto",
                     '@media (max-width: 768px)': {
                         width: '100%',
+                        mt: 0,
+                        px: 2,
+                        py: 5,
                     }
                 }}
             >

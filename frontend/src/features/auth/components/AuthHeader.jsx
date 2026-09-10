@@ -12,7 +12,7 @@ const AuthHeader = ({
             sx={{
                 position: "absolute",
                 top: 25,
-                right: 175,
+                right: "clamp(16px, 8vw, 175px)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
@@ -29,7 +29,7 @@ const AuthHeader = ({
                 <Typography
                     sx={{
                         fontSize: "13px",
-                        color: "#64748b",
+                        color: "#63758c",
                     }}
                 >
                     {text}
@@ -45,7 +45,7 @@ const AuthHeader = ({
                         sx={{
                             fontSize: "13px",
                             fontWeight: 600,
-                            color: "#2563eb",
+                            color: "#1677c8",
                             "&:hover": {
                                 textDecoration: "underline",
                             },
@@ -66,6 +66,9 @@ const AuthHeader = ({
                     borderRadius: "14px",
                     width: "410px",
                     justifyContent: "space-between",
+                    '@media (max-width: 768px)': {
+                        width: "min(410px, calc(100vw - 32px))",
+                    },
                     
                 }}
             >
