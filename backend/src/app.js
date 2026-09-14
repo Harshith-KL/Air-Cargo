@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 const cors = require("cors");
 const { FRONTEND_URL } = require("./config/env");
 const authRoutes = require("./routes/auth.routes");
@@ -9,13 +10,15 @@ const aiRoutes = require("./ai/ai.routes");
 
 const app = express();
 
+app.disable("x-powered-by");
+app.use(helmet());
 app.set("trust proxy", 1);
+app.use(express.json({ limit: "1mb" }));
 app.use(
     cors({
         origin: FRONTEND_URL,
     })
 );
-app.use(express.json());
 
 app.get("/health",(req, res) => {
     res.status(200).json({
