@@ -38,6 +38,11 @@ jobs:
     name: Backend Tests
     runs-on: ubuntu-latest
 
+  env:
+    NODE_ENV: test
+    MONGODB_URI: ${{ secrets.MONGODB_TEST_URI }}
+    JWT_SECRET: ${{ secrets.JWT_TEST_SECRET }}
+
     defaults:
       run:
         working-directory: backend
